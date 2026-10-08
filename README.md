@@ -1,46 +1,114 @@
-# Getting Started with Create React App
+# To Do List Day
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**To Do List Day** é uma aplicação web desenvolvida com React, TypeScript e Create React App para ajudar o usuário a organizar tarefas do dia. A interface é apresentada em português e permite criar, consultar, editar e excluir tarefas com diferentes níveis de dificuldade.
 
-## Available Scripts
+O projeto foi criado para facilitar o acompanhamento de tarefas pessoais e o gerenciamento de uma lista cotidiana, oferecendo uma experiência simples e direta.
 
-In the project directory, you can run:
+## Funcionalidades
 
-### `npm start`
+- Criar uma nova tarefa com título e dificuldade.
+- Visualizar todas as tarefas cadastradas.
+- Editar uma tarefa existente.
+- Excluir uma tarefa.
+- Exibir uma mensagem quando não há tarefas.
+- Usar componentes React para manter a interface organizada.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> As tarefas são mantidas em estado local da aplicação. Isso significa que os dados não são persistidos após o recarregamento ou fechamento da página.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tecnologias
 
-### `npm test`
+- **React 19** para construir a interface.
+- **TypeScript** para tipar os dados e os componentes.
+- **Create React App** para gerenciar o projeto e executar o build.
+- **CSS Modules** para organizar os estilos dos componentes.
+- **Jest** e **Testing Library** disponíveis para testes e validação de componentes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Estrutura do projeto
 
-### `npm run build`
+```text
+src/
+├── App.tsx                 # Composição da aplicação e gerenciamento do estado
+├── App.module.css           # Estilos da aplicação principal
+├── index.css                # Estilos globais
+├── components/
+│   ├── Header.tsx           # Cabeçalho da aplicação
+│   ├── Header.module.css     # Estilos do cabeçalho
+│   ├── Footer.tsx           # Rodapé da aplicação
+│   ├── Footer.module.css     # Estilos do rodapé
+│   ├── TaskForm.tsx         # Formulário de criação e edição
+│   ├── TaskForm.module.css   # Estilos do formulário
+│   ├── TaskList.tsx         # Lista de tarefas
+│   ├── TaskList.module.css   # Estilos da lista
+│   └── Modal.tsx            # Modal de edição
+├── interfaces/
+│   └── Task.ts              # Interface dos dados da tarefa
+└── *.module.css             # Estilos adicionais do projeto
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Requisitos
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Antes de executar o projeto, verifique se você possui:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js instalado.
+- npm instalado.
+- Git instalado, caso queira clonar o repositório.
 
-### `npm run eject`
+## Instalação
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Clone o repositório:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/PedrohgdSantos/ToDoListDay.git
+cd ToDoListDay
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instale as dependências:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm install
+```
 
-## Learn More
+## Executar a aplicação
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Inicie o servidor de desenvolvimento:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm start
+```
+
+A aplicação ficará disponível em:
+
+[http://localhost:3000](http://localhost:3000)
+
+Durante o desenvolvimento, o navegador será atualizado automaticamente quando os arquivos forem alterados.
+
+## Validar o projeto
+
+Para executar os testes:
+
+```bash
+npm test
+```
+
+Para criar uma versão de produção:
+
+```bash
+npm run build
+```
+
+O resultado do build será gerado na pasta `build`.
+
+## Como usar
+
+1. Abra a aplicação no navegador.
+2. Informe o título da tarefa e sua dificuldade.
+3. Clique em **Criar tarefa** para adicionar a tarefa à lista.
+4. Use os botões de edição e exclusão para alterar ou remover uma tarefa.
+
+## Contribuição
+
+Fique à vontade para contribuir com o projeto. Para isso, faça um fork do repositório, crie uma branch para sua alteração, implemente a mudança e envie um pull request.
+
+## Licença
+
+Este projeto foi desenvolvido como uma aplicação pessoal e não possui uma licença específica documentada.
