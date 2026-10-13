@@ -54,14 +54,6 @@ Antes de executar o projeto, verifique se você possui:
 - Git instalado, caso queira clonar o repositório.
 
 ## Instalação
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/PedrohgdSantos/ToDoListDay.git
-cd ToDoListDay
-```
-
 Instale as dependências:
 
 ```bash
@@ -104,11 +96,3 @@ O resultado do build será gerado na pasta `build`.
 2. Informe o título da tarefa e sua dificuldade.
 3. Clique em **Criar tarefa** para adicionar a tarefa à lista.
 4. Use os botões de edição e exclusão para alterar ou remover uma tarefa.
-
-## Contribuição
-
-Fique à vontade para contribuir com o projeto. Para isso, faça um fork do repositório, crie uma branch para sua alteração, implemente a mudança e envie um pull request.
-
-## Licença
-
-Este projeto foi desenvolvido como uma aplicação pessoal e não possui uma licença específica documentada.
