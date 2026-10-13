@@ -14,7 +14,7 @@ O projeto foi criado para facilitar o acompanhamento de tarefas pessoais e o ger
 - Usar componentes React para manter a interface organizada.
 
 > As tarefas são mantidas em estado local da aplicação. Isso significa que os dados não são persistidos após o recarregamento ou fechamento da página.
-
+  
 ## Tecnologias
 
 - **React 19** para construir a interface.

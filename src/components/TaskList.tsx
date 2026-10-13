@@ -13,38 +13,45 @@ interface Props {
 }
 
 const TaskList = ({ taskList, handleDelete, handleEdit }: Props) => {
+    if (taskList.length === 0) {
+        return <p className={styles.empty}>Nenhuma Tarefa</p>
+    }
+
     return (
-      <>
-        {taskList.length > 0 ? (
-            taskList.map((task) => (
-                <div key={task.id} className={styles.task}>
+        <>
+            {taskList.map((task) => (
+                <div
+                    key={task.id}
+                    className={styles.task}
+                    draggable
+                    onDragStart={(event: React.DragEvent<HTMLDivElement>) => {
+                        event.dataTransfer.setData("text/plain", String(task.id));
+                    }}
+                >
                     <div className={styles.details}>
-                        <h4>{task.title}</h4>
+                        <h3>{task.title}</h3>
                         <p>Dificuldade: {task.difficulty}</p>
                     </div>
                     <div className={styles.actions}>
                         <button
-                            type="button"
+                            type='button'
                             aria-label={`Editar ${task.title}`}
                             onClick={() => handleEdit(task)}
                         >
-                            <i className='bi bi-pencil' />
+                            <i className="bi bi-pencil" />
                         </button>
                         <button
-                            type="button"
+                            type='button'
                             aria-label={`Excluir ${task.title}`}
-                            onClick={() => handleDelete(task.id)}
+                            onClick={() => handleDelete (task.id)}
                         >
-                            <i className='bi bi-trash' />
+                            <i className="bi bi-trash"/>
                         </button>
                     </div>
                 </div>
-            ))
-        ) : (
-            <p>Não há tarefas</p>
-        )}
-      </>
+            ))}        
+        </>
     );
 };
 
-export default TaskList
+export default TaskList;

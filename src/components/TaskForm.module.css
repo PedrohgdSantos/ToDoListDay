@@ -1,36 +1,35 @@
 .form {
     display: flex;
     flex-direction: column;
+    width: 90%;
     max-width: 400px;
     margin: 0 auto;
 }
-.form label{
-    color: black;
+
+.form label {
+    color: #000000;
     font-weight: bold;
-    
 }
 
-.form input {
+.form input,
+.form select {
+    box-sizing: border-box;
     padding: 8px 15px;
     margin-bottom: 1.5em;
-    border-radius: 8px;
     border: 1px solid #282c34;
+    border-radius: 8px;
 }
 
 .form input[type="submit"] {
     background-color: rgb(114, 25, 141);
     border: 1px solid #ffffff;
-    border-radius: 8px;
     color: #ffffff;
-    transition: .5s;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .form input[type="submit"]:hover {
     background-color: #282c34;
-    border-color: aliceblue;
-    color: #ffffff;
-
 }
 
 .input_container {

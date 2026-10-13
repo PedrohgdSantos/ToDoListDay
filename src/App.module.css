@@ -1,20 +1,40 @@
-*{
-    font-family: Arial;
+* {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 .main {
     min-height: 60vh;
-    text-align: center;
     padding: 2em;
-
 }
 
-.main h2 {
-    margin-bottom: 0.8em;
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1.5em;
 }
 
-.hide{
-  display: none !important;
+.toolbar h2 {
+    margin: 0;
+}
+
+.toolbar button {
+    padding: 0.7em 1em;
+    border: 0;
+    border-radius: 6px;
+    background-color: #6b04af;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.toolbar button:hover {
+    background-color: #5106a7;
+}
+
+.hide {
+    display: none !important;
 }

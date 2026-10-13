@@ -1,10 +1,10 @@
-import React, {useState, ChangeEvent, SubmitEvent, useEffect} from 'react'
+import React, {ChangeEvent, SubmitEvent, useEffect, useState} from 'react'
 
 //CSS
 import styles from './TaskForm.module.css';
 
 //Interface
-import { ITask } from "../interfaces/Task";
+import { ITask, TaskStatus } from "../interfaces/Task";
 
 interface Props {
     btnText: string;
@@ -21,43 +21,53 @@ const TaskForm = ({
     taskToEdit,
     onSaved
 }: Props) => {
-    const [title, setTitle] = useState<string>(taskToEdit?.title ?? "")
-    const [difficulty, setDifficulty] = useState<number>(taskToEdit?.difficulty ?? 0)
+    const [title, setTitle] = useState<string>(taskToEdit?.title ?? "");
+    const [difficulty, setDifficulty] = useState<number>(taskToEdit?.difficulty ?? 0);
+    const [status, setStatus] = useState<TaskStatus>(
+        taskToEdit?.status ?? "pendentes"
+    );
 
     useEffect(() => {
         setTitle(taskToEdit?.title ?? "")
         setDifficulty(taskToEdit?.difficulty ?? 0)
     }, [taskToEdit])
 
-    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault()
 
         if (taskToEdit) {
-            setTaskList(taskList.map(task =>
-                task.id === taskToEdit.id ? { ...task, title, difficulty } : task
-            ))
+            setTaskList((currentTask) =>
+                currentTask.map((task) =>
+                    task.id === taskToEdit.id
+                        ? { ...task, title, difficulty, status}
+                        : task
+                )
+            );
             onSaved?.()
             return
         }
 
         const newTask: ITask = {
-            id: Math.floor(Math.random() * 1000),
+            id: Date.now(),
             title,
-            difficulty
+            difficulty,
+            status
         }
 
-        setTaskList([...taskList, newTask])
-        setTitle("")
-        setDifficulty(0)
+        setTaskList((currentTasks) => [...currentTasks, newTask]);
+        setTitle("");
+        setDifficulty(0);
+        setStatus("pendentes");
+        onSaved?.();
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.name === "title") {
-            setTitle(e.target.value)
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.name === "title") {
+            setTitle(event.target.value)
         } else {
-            setDifficulty(parseInt(e.target.value))
+            setDifficulty(Number(event.target.value));
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -69,23 +79,44 @@ const TaskForm = ({
                     placeholder="Título da tarefa"
                     onChange={handleChange}
                     value={title}
+                    required
                 />
             </div>
             <div className={styles.input_container}>
                 <label htmlFor="difficulty">Dificuldade: </label>
                 <input
-                    type="text"
+                    id='difficulty'
+                    type="number"
                     name="difficulty"
-                    placeholder="Dificuldade da tarefa"
+                    min="0"
+                    max="10"
                     onChange={handleChange}
                     value={difficulty}
                 />
             </div>
             <div className={styles.input_container}>
+                <label htmlFor="status">Status:</label>
+                <select
+                    name="status"
+                    id="status"
+                    value={status}
+                    onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                        setStatus(event.target.value as TaskStatus)
+                        }
+                    >
+                        <option value="direcionadas">Direcionadas</option>
+                        <option value="pendentes">Pendentes</option>
+                        <option value="em_execucao">Em Execução</option>
+                        <option value="concluidas">Concluidas</option>
+                        <option value="canceladas">Canceladas</option>
+                    </select>
+            </div>
+
+            <div className={styles.input_container}>
                 <input type="submit" value={btnText} />
             </div>
         </form>
-    )
-}
+    );
+};
 
 export default TaskForm

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
+import TaskBoard from './components/TaskBoard';
 import Modal from './components/Modal';
 
 //CSS
@@ -12,54 +12,79 @@ import Modal from './components/Modal';
 import styles from './App.module.css';
 
 //Interface
-import { ITask } from "./interfaces/Task";
+import { ITask, TaskStatus } from "./interfaces/Task";
 
 function App() {
 
   const [ taskList, setTaskList ] = useState<ITask[]>([]);
   const [ taskToEdit, setTaskToEdit ] = useState<ITask | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const deleteTask = (id:number) => {
-    setTaskList(
-      taskList.filter(task =>{
-        return task.id !== id
-      })
-    )
-  }
+    setTaskList((currentTask) =>
+      currentTask.filter((task) => task.id !== id)
+    );
+  };
+
+  const moveTask = (id: number, status: TaskStatus) => {
+    setTaskList((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === id ? {...task, status} : task
+      )
+    );
+  };
+
+  const openCreateForm = () => {
+        setTaskToEdit(null);
+        setIsFormOpen(true);
+    };
+
+  const openEditForm = (task: ITask) => {
+        setTaskToEdit(task);
+        setIsFormOpen(true);
+    };
+
+  const closeForm = () => {
+        setIsFormOpen(false);
+        setTaskToEdit(null);
+    };
 
   return (
     <div>
-      {taskToEdit && (
-        <Modal onClose={() => setTaskToEdit(null)}>
-          <TaskForm
-            btnText='Salvar alterações'
-            taskList={taskList}
-            setTaskList={setTaskList}
-            taskToEdit={taskToEdit}
-            onSaved={() => setTaskToEdit(null)}
-          />
-        </Modal>
-      )}
-      <Header />
-      <main className={styles.main}>
-        <div>
-          <h2>O que você vai fazer?</h2>
-          <TaskForm btnText='Criar tarefa'
-          taskList={taskList}
-          setTaskList={setTaskList}/>
+      {isFormOpen && (
+          <Modal
+            title={taskToEdit ? "Editar tarefa" : "Nova tarefa"}
+            onClose={closeForm}
+          >
+            <TaskForm
+              btnText={taskToEdit ? "Salvar alteracoes" : "Criar tarefa"}
+              taskList={taskList}
+              setTaskList={setTaskList}
+              taskToEdit={taskToEdit}
+              onSaved={closeForm}
+            />
+          </Modal>
+        )}
+
+            <Header />
+            <main className={styles.main}>
+                <div className={styles.toolbar}>
+                    <h2>Suas tarefas</h2>
+                    <button type="button" onClick={openCreateForm}>
+                        Nova tarefa
+                    </button>
+                </div>
+
+                <TaskBoard
+                    taskList={taskList}
+                    handleDelete={deleteTask}
+                    handleEdit={openEditForm}
+                    handleMove={moveTask}
+                />
+            </main>
+            <Footer />
         </div>
-        <div>
-          <h2>Suas tarefas</h2>
-          <TaskList
-            taskList={taskList}
-            handleDelete={deleteTask}
-            handleEdit={(task) => setTaskToEdit(task)}
-          />
-        </div>
-      </main>
-      <Footer/>
-    </div>
-  );
+    );
 }
 
 export default App;
