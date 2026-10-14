@@ -20,8 +20,10 @@ const Modal = ({ title, children, onClose }: Props) => {
                 aria-label={title}
             >
                 <button type="button" onClick={onClose} aria-label="Fechar modal">×</button>
-                <h2>{title}</h2>
-                {children}
+                <div className={styles.content}>
+                    <h2>{title}</h2>
+                    {children}
+                </div>
             </div>
         </div>
     )

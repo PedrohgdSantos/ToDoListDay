@@ -22,6 +22,7 @@ const TaskForm = ({
     onSaved
 }: Props) => {
     const [title, setTitle] = useState<string>(taskToEdit?.title ?? "");
+    const [description, setDescription] = useState<string>(taskToEdit?.description ?? "");
     const [difficulty, setDifficulty] = useState<string>(taskToEdit ? String(taskToEdit.difficulty) : "");
     const [status, setStatus] = useState<TaskStatus>(
         taskToEdit?.status ?? "pendentes"
@@ -29,6 +30,7 @@ const TaskForm = ({
 
     useEffect(() => {
         setTitle(taskToEdit?.title ?? "")
+        setDescription(taskToEdit?.description ?? "");
         setDifficulty(taskToEdit ? String(taskToEdit.difficulty) : "");
     }, [taskToEdit]);
 
@@ -40,7 +42,7 @@ const TaskForm = ({
             setTaskList((currentTask) =>
                 currentTask.map((task) =>
                     task.id === taskToEdit.id
-                        ? { ...task, title, difficulty: difficultyValue, status}
+                        ? { ...task, title, description, difficulty: difficultyValue, status}
                         : task
                 )
             );
@@ -51,12 +53,14 @@ const TaskForm = ({
         const newTask: ITask = {
             id: Date.now(),
             title,
+            description,
             difficulty: difficultyValue,
             status
         }
 
         setTaskList((currentTasks) => [...currentTasks, newTask]);
         setTitle("");
+        setDescription("");
         setDifficulty("");
         setStatus("pendentes");
         onSaved?.();
@@ -98,6 +102,19 @@ const TaskForm = ({
                     onChange={handleChange}
                     value={title}
                     required
+                />
+            </div>
+            <div className={styles.input_container}>
+                <label htmlFor="description">Descrição:</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Explique o que precisa ser feito"
+                    rows={3}
+                    value={description}
+                    onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                        setDescription(event.target.value)
+                    }
                 />
             </div>
             <div className={styles.input_container}>

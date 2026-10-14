@@ -12,12 +12,18 @@
 }
 
 .form input,
-.form select {
+.form select,
+.form textarea {
     box-sizing: border-box;
     padding: 8px 15px;
     margin-bottom: 1.5em;
     border: 1px solid #282c34;
     border-radius: 8px;
+}
+
+.form textarea {
+    resize: vertical;
+    font: inherit;
 }
 
 .form input[type="submit"] {

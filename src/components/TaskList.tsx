@@ -31,6 +31,9 @@ const TaskList = ({ taskList, handleDelete, handleEdit }: Props) => {
                     <div className={styles.details}>
                         <h3>{task.title}</h3>
                         <p>Dificuldade: {task.difficulty}</p>
+                        {task.description.trim() && (
+                            <p className={styles.description}>{task.description}</p>
+                        )}
                     </div>
                     <div className={styles.actions}>
                         <button
