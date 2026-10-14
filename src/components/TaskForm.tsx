@@ -22,24 +22,25 @@ const TaskForm = ({
     onSaved
 }: Props) => {
     const [title, setTitle] = useState<string>(taskToEdit?.title ?? "");
-    const [difficulty, setDifficulty] = useState<number>(taskToEdit?.difficulty ?? 0);
+    const [difficulty, setDifficulty] = useState<string>(taskToEdit ? String(taskToEdit.difficulty) : "");
     const [status, setStatus] = useState<TaskStatus>(
         taskToEdit?.status ?? "pendentes"
     );
 
     useEffect(() => {
         setTitle(taskToEdit?.title ?? "")
-        setDifficulty(taskToEdit?.difficulty ?? 0)
-    }, [taskToEdit])
+        setDifficulty(taskToEdit ? String(taskToEdit.difficulty) : "");
+    }, [taskToEdit]);
 
     const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault()
+        const difficultyValue = difficulty === "" ? 0 : Number(difficulty);
 
         if (taskToEdit) {
             setTaskList((currentTask) =>
                 currentTask.map((task) =>
                     task.id === taskToEdit.id
-                        ? { ...task, title, difficulty, status}
+                        ? { ...task, title, difficulty: difficultyValue, status}
                         : task
                 )
             );
@@ -50,22 +51,39 @@ const TaskForm = ({
         const newTask: ITask = {
             id: Date.now(),
             title,
-            difficulty,
+            difficulty: difficultyValue,
             status
         }
 
         setTaskList((currentTasks) => [...currentTasks, newTask]);
         setTitle("");
-        setDifficulty(0);
+        setDifficulty("");
         setStatus("pendentes");
         onSaved?.();
     }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.name === "title") {
-            setTitle(event.target.value)
-        } else {
-            setDifficulty(Number(event.target.value));
+            setTitle(event.target.value);
+            return;
+        }
+
+        const newValue = event.target.value;
+
+        if (newValue === "") {
+            setDifficulty("");
+            return;
+        }
+
+        const normalizedValue = newValue.replace(/^0+(?=\d)/, "");
+        const numericValue = Number(normalizedValue);
+
+        if (
+            Number.isInteger(numericValue) &&
+            numericValue >= 0 &&
+            numericValue <= 10
+        ) {
+            setDifficulty(normalizedValue);
         }
     };
 
@@ -85,11 +103,16 @@ const TaskForm = ({
             <div className={styles.input_container}>
                 <label htmlFor="difficulty">Dificuldade: </label>
                 <input
-                    id='difficulty'
+                    id="difficulty"
                     type="number"
                     name="difficulty"
                     min="0"
                     max="10"
+                    step="1"
+                    placeholder="0"
+                    onFocus={() => {
+                        if (difficulty === "0") setDifficulty("");
+                    }}
                     onChange={handleChange}
                     value={difficulty}
                 />
@@ -119,4 +142,4 @@ const TaskForm = ({
     );
 };
 
-export default TaskForm
+export default TaskForm;
